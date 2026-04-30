@@ -4,15 +4,21 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --primary-rgb: 16 185 129;
+  --primary-glow: rgba(16, 185, 129, 0.4);
+}
+
 @layer base {
   html {
     scroll-behavior: smooth;
-    /* Force dark mode background strictly */
-    background-color: #09090b; 
+    /* Deep gradient background */
+    background: radial-gradient(circle at top right, #111827, #09090b);
+    background-attachment: fixed;
   }
   
   body {
-    @apply bg-dark text-slate-300 font-sans antialiased selection:bg-primary/30 selection:text-white;
+    @apply bg-transparent text-slate-300 font-sans antialiased selection:bg-primary/30 selection:text-white;
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -26,10 +32,15 @@
   }
 
   .btn-primary {
-    @apply relative px-8 py-3.5 bg-primary text-white rounded-lg font-medium tracking-wide
-    transition-all duration-300 hover:bg-primary-light hover:-translate-y-1 
-    active:translate-y-0 shadow-[0_0_15px_rgba(16,185,129,0.3)] hover:shadow-[0_0_25px_rgba(16,185,129,0.6)]
-    overflow-hidden;
+    @apply relative px-8 py-3.5 text-white rounded-lg font-medium tracking-wide
+    transition-all duration-300 hover:-translate-y-1 
+    active:translate-y-0 overflow-hidden;
+    background-color: var(--primary-color);
+    box-shadow: 0 0 15px var(--primary-glow);
+  }
+  
+  .btn-primary:hover {
+    box-shadow: 0 0 25px var(--primary-glow);
   }
 
   /* Button Shine Effect */
@@ -49,15 +60,32 @@
 
   .glass-card {
     @apply bg-dark-lighter/40 backdrop-blur-xl border border-white/5 rounded-2xl overflow-hidden
-    shadow-lg hover:border-primary/30 transition-colors duration-300;
+    shadow-lg transition-colors duration-300;
   }
   
+  .glass-card:hover {
+    border-color: rgb(var(--primary-rgb));
+  }
+  
+  .text-primary {
+    color: rgb(var(--primary-rgb));
+  }
+
+  .border-primary {
+    border-color: rgb(var(--primary-rgb));
+  }
+
+  .bg-primary {
+    background-color: rgb(var(--primary-rgb));
+  }
+
   .text-gradient {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-white via-emerald-200 to-emerald-400;
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-white via-slate-200 to-slate-400;
   }
   
   .text-gradient-primary {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-primary-light to-primary-dark;
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(to right, rgb(var(--primary-rgb)), white);
   }
 }
 

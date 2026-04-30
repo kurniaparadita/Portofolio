@@ -7,64 +7,85 @@ export const navLinks = [
 ];
 
 export const heroData = {
-  name: "Frontend Engineer.",
-  roles: ["Membangun UI yang Scalable", "Menciptakan Pengalaman Interaktif", "Mengoptimalkan Performa Web"],
-  tagline: "Saya membangun aplikasi web yang modern, cepat, dan memiliki arsitektur yang kuat. Fokus pada performa, aksesibilitas, dan kualitas visual tingkat tinggi.",
+  name: "Yefta Kurnia Paradita.",
+  roles: ["Backend & Data Engineer", "Java Spring Boot Developer", "ETL & SQL Specialist"],
+  tagline: "Spesialis dalam membangun arsitektur backend yang robust, integrasi data (ETL), dan sistem database skala enterprise.",
   cta: "Lihat Karya Saya",
 };
 
 export const aboutData = {
-  description: "Sebagai seorang Software Engineer, saya percaya bahwa kode yang baik tidak hanya berfungsi, tetapi juga mudah dipelihara dan memberikan pengalaman pengguna yang luar biasa. Saya memiliki passion mendalam terhadap ekosistem JavaScript/TypeScript modern dan selalu mencari cara untuk mengoptimalkan setiap piksel dan milidetik dalam aplikasi yang saya bangun.",
+  description: "Saya adalah seorang Software Engineer yang berfokus pada ekosistem Java dan Data Engineering. Memiliki keahlian kuat dalam mengelola seluruh lifecycle data—mulai dari ekstraksi (ETL), pemrosesan di backend menggunakan Spring Boot, hingga penyajian data yang efisien. Saya berkomitmen untuk menciptakan solusi teknologi yang stabil, aman, dan scalable.",
   stats: [
-    { label: "Tahun Pengalaman", value: "3+" },
-    { label: "Proyek Selesai", value: "20+" },
-    { label: "Kontribusi Open Source", value: "15+" },
+    { label: "Keahlian Utama", value: "Java & SQL" },
+    { label: "Fokus Sistem", value: "Enterprise" },
+    { label: "Data Integration", value: "SSIS/SSRS" },
   ]
 };
 
 export const skillsData = [
-  { name: "React / Next.js", icon: "React", category: "Frontend" },
-  { name: "TypeScript", icon: "TS", category: "Language" },
-  { name: "Tailwind CSS", icon: "Tailwind", category: "Frontend" },
-  { name: "Framer Motion", icon: "Motion", category: "Frontend" },
-  { name: "Node.js / Express", icon: "Node", category: "Backend" },
-  { name: "PostgreSQL", icon: "DB", category: "Database" },
-  { name: "Git / CI/CD", icon: "Git", category: "Tools" },
-  { name: "Figma", icon: "Figma", category: "Design" },
+  // 1. Database & Data Engineering
+  { name: "MS SQL Server", category: "Database & Data", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/microsoftsqlserver/microsoftsqlserver-plain.svg" },
+  { name: "PostgreSQL", category: "Database & Data", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" },
+  { name: "MySQL", category: "Database & Data", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" },
+  { name: "SSIS / SSRS", category: "Database & Data", icon: "https://img.icons8.com/color/48/microsoft-sql-server.png" }, // Placeholder for SSIS/SSRS
+  { name: "JDBC", category: "Database & Data", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" },
+
+  // 2. Backend Development
+  { name: "Java", category: "Backend", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" },
+  { name: "Spring Boot", category: "Backend", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/spring/spring-original.svg" },
+  { name: "Spring Security", category: "Backend", icon: "https://www.vectorlogo.zone/logos/springio/springio-icon.svg" },
+  { name: "Spring Data JPA", category: "Backend", icon: "https://www.vectorlogo.zone/logos/springio/springio-icon.svg" },
+
+  // 3. Frontend Development
+  { name: "JavaScript", category: "Frontend", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" },
+  { name: "React.js", category: "Frontend", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" },
+  { name: "Next.js", category: "Frontend", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg" },
+  { name: "Tailwind CSS", category: "Frontend", icon: "https://www.vectorlogo.zone/logos/tailwindcss/tailwindcss-icon.svg" },
+
+  // 4. Tools & Version Control
+  { name: "Git", category: "Tools", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" },
+  { name: "GitHub", category: "Tools", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" },
+  { name: "Insomnia", category: "Tools", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/insomnia/insomnia-original.svg" },
+  // { name: "Postman", category: "Tools", icon: "https://www.vectorlogo.zone/logos/getpostman/getpostman-icon.svg" },
+  { name: "Figma", category: "Tools", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg" },
+
+  // 5. Web & Supporting Tech
+  { name: "Laravel", category: "Supporting Tech", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/laravel/laravel-original.svg" },
+  { name: "PHP", category: "Supporting Tech", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/php/php-original.svg" },
+  { name: "phpMyAdmin", category: "Supporting Tech", icon: "https://www.vectorlogo.zone/logos/phpmyadmin/phpmyadmin-icon.svg" },
 ];
 
 export const projectsData = [
   {
-    title: "Sistem Manajemen Enterprise",
-    description: "Dashboard analitik yang kompleks dengan visualisasi data real-time, dibangun untuk performa tinggi dan skalabilitas.",
+    title: "Enterprise Data Pipeline",
+    description: "Membangun workflow ETL yang kompleks menggunakan SSIS untuk memproses ribuan data transaksi harian ke dalam SQL Server.",
     image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2070&auto=format&fit=crop",
-    techStack: ["React", "TypeScript", "Tailwind", "Zustand"],
-    github: "https://github.com",
-    demo: "https://demo.com"
+    techStack: ["SQL Server", "SSIS", "ETL"],
+    github: "https://github.com/kurniaparadita",
+    demo: "#"
   },
   {
-    title: "Platform E-Commerce Premium",
-    description: "Toko online headless dengan animasi halus, integrasi payment gateway, dan manajemen state yang optimal.",
+    title: "Secure Banking Backend",
+    description: "RESTful API menggunakan Spring Boot dan Spring Security untuk sistem otentikasi yang aman dan efisien.",
     image: "https://images.unsplash.com/photo-1472851294608-062f824d29cc?q=80&w=2070&auto=format&fit=crop",
-    techStack: ["Next.js", "Framer Motion", "Stripe"],
-    github: "https://github.com",
-    demo: "https://demo.com"
+    techStack: ["Java", "Spring Boot", "MySQL"],
+    github: "https://github.com/kurniaparadita",
+    demo: "#"
   },
   {
-    title: "AI Content Generator",
-    description: "Aplikasi cerdas yang memanfaatkan LLM untuk membuat konten berkualitas tinggi, lengkap dengan editor rich text.",
+    title: "Modern Analytics Dashboard",
+    description: "Visualisasi data laporan dari SSRS yang diintegrasikan ke dalam dashboard web berbasis React.",
     image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?q=80&w=2070&auto=format&fit=crop",
-    techStack: ["React", "OpenAI", "Node.js"],
-    github: "https://github.com",
-    demo: "https://demo.com"
+    techStack: ["React", "SSRS", "JavaScript"],
+    github: "https://github.com/kurniaparadita",
+    demo: "#"
   }
 ];
 
 export const contactData = {
-  email: "hello@developer.com",
+  email: "yeftak.paradita30@gmail.com",
   socials: [
-    { name: "GitHub", url: "https://github.com", icon: "Github" },
-    { name: "LinkedIn", url: "https://linkedin.com", icon: "Linkedin" },
-    { name: "Twitter", url: "https://twitter.com", icon: "Twitter" },
+    { name: "GitHub", url: "https://github.com/kurniaparadita", icon: "Github" },
+    { name: "LinkedIn", url: "https://www.linkedin.com/in/yefta-kurnia-paradita-55440522a/", icon: "Linkedin" },
   ]
 };

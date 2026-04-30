@@ -1,0 +1,21 @@
+Proyek portofolio kamu ini dibangun menggunakan Tech Stack modern yang fokus pada performa dan estetika. Berikut
+  adalah detailnya:
+
+  1. Framework & Library Utama
+   * React (Vite): Sebagai basis aplikasinya. Vite digunakan karena proses development-nya sangat cepat dibanding
+     Webpack biasa.
+   * Tailwind CSS: Digunakan untuk styling. Semua desain yang kamu lihat (grid background, gradasi, layout) diatur lewat
+     class-class Tailwind.
+   * Framer Motion: Ini yang bikin web kamu terasa "hidup". Library ini menangani semua animasi halus, mulai dari teks
+     yang muncul pas di-refresh sampai efek hover di tombol.
+
+  2. Ikon & Navigasi
+   * Lucide React: Sumber ikon-ikon yang ada di web kamu (seperti ikon panah ArrowRight, ChevronDown, dll).
+   * React Scroll: Digunakan untuk navigasi "Smooth Scroll". Jadi pas kamu klik menu "About" atau "Projects", halamannya
+     bakal meluncur halus ke bagian tersebut.
+
+  3. Fitur Spesial yang Ada
+   * Dark Mode UI: Didesain dengan palet warna Zinc 950 agar terlihat premium.
+   * Interactive Typing Effect: Efek teks yang mengetik sendiri di bagian Hero itu dibuat pakai logic useState dan
+     useEffect di React.
+   * Glassmorphism: Efek kartu transparan seperti kaca yang ada di beberapa komponen.

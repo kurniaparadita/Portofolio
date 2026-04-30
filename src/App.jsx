@@ -7,6 +7,8 @@ import Projects from './components/Projects';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 import LoadingScreen from './components/LoadingScreen';
+import WebCustomizer from './components/WebCustomizer';
+import ShootingStars from './components/ShootingStars';
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -24,6 +26,8 @@ function App() {
       {loading && <LoadingScreen />}
       
       <div className={`min-h-screen transition-opacity duration-700 ${loading ? 'opacity-0' : 'opacity-100'}`}>
+        <ShootingStars />
+        <WebCustomizer />
         <Navbar />
         <main>
           <Hero />

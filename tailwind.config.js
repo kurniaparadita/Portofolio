@@ -9,10 +9,8 @@ export default {
     extend: {
       colors: {
         primary: {
-          DEFAULT: '#10b981', // Emerald 500
-          light: '#34d399',
-          dark: '#059669',
-          glow: 'rgba(16, 185, 129, 0.4)',
+          DEFAULT: 'rgb(var(--primary-rgb) / <alpha-value>)',
+          glow: 'var(--primary-glow)',
         },
         dark: {
           DEFAULT: '#09090b', // Zinc 950 - deeper black

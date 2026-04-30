@@ -53,14 +53,18 @@ const Hero = () => {
     <section id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden bg-grid">
       {/* Background Effects */}
       <div className="absolute inset-0 z-0">
-        {/* Central Glow */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[600px] bg-primary/15 rounded-[100%] blur-[120px] mix-blend-screen opacity-70" />
+        {/* Central Glow - Primary */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] md:w-[900px] h-[500px] bg-primary/20 rounded-[100%] blur-[120px] mix-blend-screen animate-pulse-slow opacity-50" />
         
-        <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-primary/20 rounded-full blur-[120px] mix-blend-screen animate-pulse-slow" />
-        <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-blue-500/10 rounded-full blur-[100px] mix-blend-screen animate-pulse-slow" style={{ animationDelay: '1s' }} />
+        {/* Secondary Glow - Blue/Cyan for depth */}
+        <div className="absolute top-1/3 left-1/3 w-[400px] md:w-[700px] h-[400px] bg-cyan-500/10 rounded-full blur-[120px] mix-blend-screen animate-float opacity-40" />
+        
+        {/* Accent Glows */}
+        <div className="absolute top-1/4 left-1/4 w-[400px] h-[400px] bg-primary/10 rounded-full blur-[100px] mix-blend-screen animate-pulse-slow" />
+        <div className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-blue-600/10 rounded-full blur-[130px] mix-blend-screen animate-pulse-slow" style={{ animationDelay: '2s' }} />
         
         {/* Extra Ambient Light */}
-        <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-primary/5 via-transparent to-transparent" />
+        <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-primary/10 via-transparent to-transparent opacity-30" />
       </div>
       
       <div className="container mx-auto px-6 md:px-12 relative z-10 text-center">
@@ -71,7 +75,7 @@ const Hero = () => {
           className="max-w-4xl mx-auto"
         >
           <motion.div variants={itemVariants} className="inline-block mb-6">
-            <span className="px-4 py-2 rounded-full border border-primary/30 bg-primary/10 text-primary font-mono text-xs md:text-sm tracking-widest uppercase shadow-[0_0_15px_rgba(16,185,129,0.15)]">
+            <span className="px-4 py-2 rounded-full border border-primary/30 bg-primary/10 text-primary font-mono text-xs md:text-sm tracking-widest uppercase shadow-[0_0_15px_var(--primary-glow)]">
               Welcome to my space
             </span>
           </motion.div>

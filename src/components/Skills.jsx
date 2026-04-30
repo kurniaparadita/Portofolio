@@ -1,82 +1,115 @@
-import { motion } from 'framer-motion';
+import { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { skillsData } from '../data/portfolioData';
 
 const Skills = () => {
-  // Mengelompokkan skill berdasarkan kategori
   const categories = [...new Set(skillsData.map(skill => skill.category))];
+  const [activeTab, setActiveTab] = useState(categories[0]);
 
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
-      transition: { staggerChildren: 0.1 }
+      transition: { staggerChildren: 0.05 }
+    },
+    exit: {
+      opacity: 0,
+      transition: { duration: 0.2 }
     }
   };
 
   const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.5 } }
+    hidden: { opacity: 0, scale: 0.9 },
+    visible: { opacity: 1, scale: 1, transition: { duration: 0.3 } }
   };
 
   return (
-    <section id="skills" className="section-padding relative bg-dark-lighter/20 border-y border-white/5">
-      {/* Decorative gradient */}
-      <div className="absolute top-0 right-0 w-96 h-96 bg-primary/5 rounded-full blur-[100px] pointer-events-none"></div>
+    <section id="skills" className="section-padding relative bg-dark-lighter/20 border-y border-white/5 overflow-hidden">
+      {/* Background Decorative Elements */}
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/5 rounded-full blur-[120px] pointer-events-none -translate-y-1/2 translate-x-1/4"></div>
+      <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-blue-500/5 rounded-full blur-[120px] pointer-events-none translate-y-1/2 -translate-x-1/4"></div>
 
-      <div className="container mx-auto">
+      <div className="container mx-auto relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
+          viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="mb-16 md:mb-20 text-center"
+          className="mb-12 text-center"
         >
           <div className="inline-flex items-center justify-center gap-4 mb-4">
             <div className="h-[1px] w-8 bg-primary"></div>
-            <h2 className="text-3xl md:text-5xl font-bold uppercase tracking-wider">
+            <h2 className="text-3xl md:text-5xl font-bold uppercase tracking-wider font-heading">
               Technical <span className="text-primary">Skills</span>
             </h2>
             <div className="h-[1px] w-8 bg-primary"></div>
           </div>
-          <p className="text-slate-400 mt-4 max-w-2xl mx-auto font-light">Teknologi dan alat yang saya gunakan untuk membangun aplikasi web berkinerja tinggi.</p>
+          <p className="text-slate-400 mt-4 max-w-2xl mx-auto font-light">
+            Kumpulan teknologi dan alat yang saya kuasai untuk menghadirkan solusi digital yang efisien.
+          </p>
         </motion.div>
 
-        <div className="flex flex-col gap-16">
-          {categories.map((category, idx) => (
-            <div key={idx} className="w-full">
-              <motion.h3 
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                className="text-xl font-semibold text-white mb-6 uppercase tracking-widest border-l-2 border-primary pl-4"
-              >
-                {category}
-              </motion.h3>
-              
-              <motion.div 
-                variants={containerVariants}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, margin: "-50px" }}
-                className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4 lg:gap-6"
-              >
-                {skillsData.filter(s => s.category === category).map((skill, index) => (
+        {/* Tab Navigation */}
+        <div className="flex flex-wrap justify-center gap-3 mb-12">
+          {categories.map((category) => (
+            <button
+              key={category}
+              onClick={() => setActiveTab(category)}
+              className={`px-6 py-2.5 rounded-full text-sm font-medium transition-all duration-300 border ${
+                activeTab === category
+                  ? 'bg-primary border-primary text-white shadow-[0_0_20px_var(--primary-glow)] scale-105'
+                  : 'bg-dark-light/50 border-white/10 text-slate-400 hover:border-primary/50 hover:text-primary'
+              }`}
+            >
+              {category}
+            </button>
+          ))}
+        </div>
+
+        {/* Skills Grid */}
+        <div className="min-h-[400px]">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={activeTab}
+              variants={containerVariants}
+              initial="hidden"
+              animate="visible"
+              exit="exit"
+              className="flex flex-wrap justify-center gap-6"
+            >
+              {skillsData
+                .filter(skill => skill.category === activeTab)
+                .map((skill, index) => (
                   <motion.div
-                    key={index}
+                    key={skill.name}
                     variants={itemVariants}
-                    whileHover={{ scale: 1.05, y: -5 }}
-                    className="glass-card group flex flex-col items-center justify-center p-6 gap-4 relative overflow-hidden"
+                    whileHover={{ y: -8, transition: { duration: 0.2 } }}
+                    className="glass-card group p-6 flex flex-col items-center gap-5 border border-white/5 hover:border-primary/30 transition-all duration-300 w-[calc(50%-12px)] sm:w-[calc(33.33%-16px)] md:w-[calc(25%-18px)] lg:w-[calc(20%-20px)] min-w-[140px]"
                   >
-                    <div className="absolute inset-0 bg-gradient-to-b from-primary/0 to-primary/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                    <div className="w-12 h-12 flex items-center justify-center rounded-lg bg-dark border border-white/10 group-hover:border-primary/50 group-hover:shadow-[0_0_15px_rgba(16,185,129,0.3)] transition-all duration-300 z-10">
-                      <span className="text-slate-300 font-bold group-hover:text-primary transition-colors">{skill.icon}</span>
+                    {/* Icon Container */}
+                    <div className="w-16 h-16 flex items-center justify-center rounded-2xl bg-dark/50 border border-white/5 group-hover:border-primary/50 group-hover:shadow-[0_0_20px_var(--primary-glow)] transition-all duration-500 p-3 relative overflow-hidden">
+                      <div className="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                      <img 
+                        src={skill.icon} 
+                        alt={skill.name} 
+                        className="w-full h-full object-contain filter grayscale group-hover:grayscale-0 transition-all duration-500 z-10"
+                        onError={(e) => {
+                          e.target.onerror = null;
+                          e.target.src = `https://ui-avatars.com/api/?name=${skill.name}&background=10b981&color=fff`;
+                        }}
+                      />
                     </div>
-                    <span className="font-medium text-slate-300 group-hover:text-white transition-colors z-10 text-center text-sm">{skill.name}</span>
+                    
+                    {/* Skill Info */}
+                    <div className="text-center">
+                      <h4 className="font-semibold text-slate-200 group-hover:text-primary transition-colors duration-300 text-sm md:text-base">
+                        {skill.name}
+                      </h4>
+                    </div>
                   </motion.div>
                 ))}
-              </motion.div>
-            </div>
-          ))}
+            </motion.div>
+          </AnimatePresence>
         </div>
       </div>
     </section>

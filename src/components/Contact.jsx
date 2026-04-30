@@ -40,7 +40,7 @@ const Contact = () => {
 
             <div className="flex flex-col gap-6">
               <div className="flex items-center gap-4 group">
-                <div className="w-12 h-12 rounded-full bg-dark flex items-center justify-center border border-white/10 group-hover:border-primary/50 group-hover:shadow-[0_0_15px_rgba(16,185,129,0.2)] transition-all">
+                <div className="w-12 h-12 rounded-full bg-dark flex items-center justify-center border border-white/10 group-hover:border-primary/50 group-hover:shadow-[0_0_15px_var(--primary-glow)] transition-all">
                   <Mail className="text-slate-400 group-hover:text-primary transition-colors" size={20} />
                 </div>
                 <div>
@@ -52,7 +52,7 @@ const Contact = () => {
               </div>
 
               <div className="flex items-center gap-4 group">
-                <div className="w-12 h-12 rounded-full bg-dark flex items-center justify-center border border-white/10 group-hover:border-primary/50 group-hover:shadow-[0_0_15px_rgba(16,185,129,0.2)] transition-all">
+                <div className="w-12 h-12 rounded-full bg-dark flex items-center justify-center border border-white/10 group-hover:border-primary/50 group-hover:shadow-[0_0_15px_var(--primary-glow)] transition-all">
                   <MapPin className="text-slate-400 group-hover:text-primary transition-colors" size={20} />
                 </div>
                 <div>
