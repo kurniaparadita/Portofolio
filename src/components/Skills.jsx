@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { skillsData } from '../data/portfolioData';
+import SkillChart from './SkillChart';
 
 const Skills = () => {
   const categories = [...new Set(skillsData.map(skill => skill.category))];
@@ -49,67 +50,90 @@ const Skills = () => {
           </p>
         </motion.div>
 
-        {/* Tab Navigation */}
-        <div className="flex flex-wrap justify-center gap-3 mb-12">
-          {categories.map((category) => (
-            <button
-              key={category}
-              onClick={() => setActiveTab(category)}
-              className={`px-6 py-2.5 rounded-full text-sm font-medium transition-all duration-300 border ${
-                activeTab === category
-                  ? 'bg-primary border-primary text-white shadow-[0_0_20px_var(--primary-glow)] scale-105'
-                  : 'bg-dark-light/50 border-white/10 text-slate-400 hover:border-primary/50 hover:text-primary'
-              }`}
-            >
-              {category}
-            </button>
-          ))}
-        </div>
+        {/* Content Grid */}
+        <div className="flex flex-col lg:flex-row gap-12 items-start">
+          {/* Left: Skill Distribution Chart */}
+          <motion.div 
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="w-full lg:w-1/3 sticky top-24"
+          >
+            <div className="mb-6">
+              <h3 className="text-xl font-bold text-white mb-2">Skill Analysis</h3>
+              <p className="text-slate-400 text-sm font-light">
+                Visualisasi distribusi keahlian teknis saya dalam ekosistem backend dan data.
+              </p>
+            </div>
+            <SkillChart />
+          </motion.div>
 
-        {/* Skills Grid */}
-        <div className="min-h-[400px]">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={activeTab}
-              variants={containerVariants}
-              initial="hidden"
-              animate="visible"
-              exit="exit"
-              className="flex flex-wrap justify-center gap-6"
-            >
-              {skillsData
-                .filter(skill => skill.category === activeTab)
-                .map((skill, index) => (
-                  <motion.div
-                    key={skill.name}
-                    variants={itemVariants}
-                    whileHover={{ y: -8, transition: { duration: 0.2 } }}
-                    className="glass-card group p-6 flex flex-col items-center gap-5 border border-white/5 hover:border-primary/30 transition-all duration-300 w-[calc(50%-12px)] sm:w-[calc(33.33%-16px)] md:w-[calc(25%-18px)] lg:w-[calc(20%-20px)] min-w-[140px]"
-                  >
-                    {/* Icon Container */}
-                    <div className="w-16 h-16 flex items-center justify-center rounded-2xl bg-dark/50 border border-white/5 group-hover:border-primary/50 group-hover:shadow-[0_0_20px_var(--primary-glow)] transition-all duration-500 p-3 relative overflow-hidden">
-                      <div className="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                      <img 
-                        src={skill.icon} 
-                        alt={skill.name} 
-                        className="w-full h-full object-contain filter grayscale group-hover:grayscale-0 transition-all duration-500 z-10"
-                        onError={(e) => {
-                          e.target.onerror = null;
-                          e.target.src = `https://ui-avatars.com/api/?name=${skill.name}&background=10b981&color=fff`;
-                        }}
-                      />
-                    </div>
-                    
-                    {/* Skill Info */}
-                    <div className="text-center">
-                      <h4 className="font-semibold text-slate-200 group-hover:text-primary transition-colors duration-300 text-sm md:text-base">
-                        {skill.name}
-                      </h4>
-                    </div>
-                  </motion.div>
-                ))}
-            </motion.div>
-          </AnimatePresence>
+          {/* Right: Skills Tabbed Grid */}
+          <div className="w-full lg:w-2/3">
+            {/* Tab Navigation */}
+            <div className="flex flex-wrap justify-start gap-3 mb-10">
+              {categories.map((category) => (
+                <button
+                  key={category}
+                  onClick={() => setActiveTab(category)}
+                  className={`px-6 py-2 rounded-full text-xs font-medium transition-all duration-300 border ${
+                    activeTab === category
+                      ? 'bg-primary border-primary text-white shadow-[0_0_20px_var(--primary-glow)] scale-105'
+                      : 'bg-dark-light/50 border-white/10 text-slate-400 hover:border-primary/50 hover:text-primary'
+                  }`}
+                >
+                  {category}
+                </button>
+              ))}
+            </div>
+
+            {/* Skills Grid */}
+            <div className="min-h-[400px]">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={activeTab}
+                  variants={containerVariants}
+                  initial="hidden"
+                  animate="visible"
+                  exit="exit"
+                  className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4"
+                >
+                  {skillsData
+                    .filter(skill => skill.category === activeTab)
+                    .map((skill) => (
+                      <motion.div
+                        key={skill.name}
+                        variants={itemVariants}
+                        whileHover={{ y: -5, transition: { duration: 0.2 } }}
+                        className="glass-card group p-4 flex flex-col items-center gap-4 border border-white/5 hover:border-primary/30 transition-all duration-300"
+                      >
+                        {/* Icon Container */}
+                        <div className="w-12 h-12 flex items-center justify-center rounded-xl bg-dark/50 border border-white/5 group-hover:border-primary/50 group-hover:shadow-[0_0_15px_var(--primary-glow)] transition-all duration-500 p-2 relative overflow-hidden">
+                          <div className="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                          <img 
+                            src={skill.icon} 
+                            alt={skill.name} 
+                            className="w-full h-full object-contain filter grayscale group-hover:grayscale-0 transition-all duration-500 z-10"
+                            onError={(e) => {
+                              e.target.onerror = null;
+                              e.target.src = `https://ui-avatars.com/api/?name=${skill.name}&background=10b981&color=fff`;
+                            }}
+                          />
+                        </div>
+                        
+                        {/* Skill Info */}
+                        <div className="text-center">
+                          <h4 className="font-semibold text-slate-200 group-hover:text-primary transition-colors duration-300 text-xs">
+                            {skill.name}
+                          </h4>
+                        </div>
+                      </motion.div>
+                    ))}
+                </motion.div>
+              </AnimatePresence>
+            </div>
+          </div>
         </div>
       </div>
     </section>

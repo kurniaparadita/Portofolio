@@ -89,3 +89,12 @@ export const contactData = {
     { name: "LinkedIn", url: "https://www.linkedin.com/in/yefta-kurnia-paradita-55440522a/", icon: "Linkedin" },
   ]
 };
+
+export const skillStats = [
+  { subject: 'Database Design', A: 95, fullMark: 100 },
+  { subject: 'Backend Dev', A: 90, fullMark: 100 },
+  { subject: 'ETL Pipelines', A: 85, fullMark: 100 },
+  { subject: 'SQL Querying', A: 98, fullMark: 100 },
+  { subject: 'API Security', A: 80, fullMark: 100 },
+  { subject: 'Frontend Dev', A: 70, fullMark: 100 },
+];
