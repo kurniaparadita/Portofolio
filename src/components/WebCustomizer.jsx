@@ -1,15 +1,15 @@
 import { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence, useMotionValue, useSpring } from 'framer-motion';
+import { motion, AnimatePresence, useMotionValue, useSpring, useVelocity, useTransform, useMotionValueEvent } from 'framer-motion';
 import { Settings, X, Stars, Palette } from 'lucide-react';
 
 const SKINS = [
   { id: 'ufo', name: 'UFO', emoji: '🛸' },
   { id: 'rocket', name: 'Rocket', emoji: '🚀' },
-  { id: 'sparkles', name: 'Magic', emoji: '✨' },
-  { id: 'fire', name: 'Fire', emoji: '🔥' },
-  { id: 'bolt', name: 'Bolt', emoji: '⚡' },
-  { id: 'robot', name: 'Robot', emoji: '🤖' },
-  { id: 'alien', name: 'Alien', emoji: '👽' },
+  { id: 'moon', name: 'Moon', emoji: '🌕' },
+  { id: 'blackhole', name: 'Black Hole', emoji: '🕳️' },
+  { id: 'saturn', name: 'Saturn', emoji: '🪐' },
+  { id: 'astronot', name: 'Astronot', emoji: '👨‍🚀' },
+  { id: 'star', name: 'Star', emoji: '🌟' },
   { id: 'none', name: 'Default', emoji: '🖱️' }
 ];
 
@@ -24,15 +24,27 @@ const COLORS = [
 
 const WebCustomizer = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [activeSkin, setActiveSkin] = useState('ufo');
+  const [activeSkin, setActiveSkin] = useState('none');
   const [activeColor, setActiveColor] = useState(COLORS[0]);
   const [isHovering, setIsHovering] = useState(false);
-  const [rotation, setRotation] = useState(0);
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const [moonEmoji, setMoonEmoji] = useState('🌕');
   
+  useEffect(() => {
+    const handleResize = () => setWindowWidth(window.innerWidth);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   const lastMousePos = useRef({ x: 0, y: 0 });
+  const lastRotation = useRef(0);
+  const canvasRef = useRef(null);
+  const points = useRef([]); // To store mouse history for trail
+  const MAX_POINTS = 20;
 
   // Update CSS Variables when color changes
   useEffect(() => {
+    document.documentElement.style.setProperty('--primary-color', activeColor.hex);
     document.documentElement.style.setProperty('--primary-rgb', activeColor.rgb);
     document.documentElement.style.setProperty('--primary-glow', activeColor.glow);
   }, [activeColor]);
@@ -41,41 +53,47 @@ const WebCustomizer = () => {
   const mouseX = useMotionValue(-100);
   const mouseY = useMotionValue(-100);
   
-  // Multiple springs for trailing effect
+  // Spring for main follower
   const springConfigMain = { damping: 25, stiffness: 250, mass: 0.5 };
-  const springConfigTrail1 = { damping: 30, stiffness: 200, mass: 0.6 };
-  const springConfigTrail2 = { damping: 35, stiffness: 150, mass: 0.7 };
-  const springConfigTrail3 = { damping: 40, stiffness: 100, mass: 0.8 };
-
   const smoothX = useSpring(mouseX, springConfigMain);
   const smoothY = useSpring(mouseY, springConfigMain);
+
+  // Sync moon phase to mouse position
+  useMotionValueEvent(mouseX, "change", (latest) => {
+    if (activeSkin !== 'moon') return;
+    const phases = ['🌑', '🌒', '🌓', '🌔', '🌕'];
+    const index = Math.floor((latest / windowWidth) * phases.length);
+    const safeIndex = Math.min(Math.max(index, 0), phases.length - 1);
+    if (phases[safeIndex] !== moonEmoji) {
+      setMoonEmoji(phases[safeIndex]);
+    }
+  });
+
+  // Velocity-based rotation calculation
+  const velX = useVelocity(smoothX);
+  const velY = useVelocity(smoothY);
   
-  const trail1X = useSpring(mouseX, springConfigTrail1);
-  const trail1Y = useSpring(mouseY, springConfigTrail1);
-  
-  const trail2X = useSpring(mouseX, springConfigTrail2);
-  const trail2Y = useSpring(mouseY, springConfigTrail2);
-  
-  const trail3X = useSpring(mouseX, springConfigTrail3);
-  const trail3Y = useSpring(mouseY, springConfigTrail3);
+  const directionalRotation = useTransform([velX, velY], ([vx, vy]) => {
+    if (activeSkin !== 'rocket' && activeSkin !== 'ufo') return 0;
+    
+    // Only update if moving fast enough to determine direction
+    if (Math.abs(vx) > 5 || Math.abs(vy) > 5) {
+      const angle = Math.atan2(vy, vx) * (180 / Math.PI);
+      const offset = activeSkin === 'rocket' ? 45 : 0;
+      lastRotation.current = angle + offset;
+    }
+    
+    return lastRotation.current;
+  });
 
   useEffect(() => {
     const handleMouseMove = (e) => {
-      // Calculate rotation for skins that follow direction (UFO and Rocket)
-      if (activeSkin === 'rocket' || activeSkin === 'ufo') {
-        const dx = e.clientX - lastMousePos.current.x;
-        const dy = e.clientY - lastMousePos.current.y;
-        
-        if (Math.abs(dx) > 1 || Math.abs(dy) > 1) {
-          const angle = Math.atan2(dy, dx) * (180 / Math.PI);
-          const offset = activeSkin === 'rocket' ? 45 : 0;
-          setRotation(angle + offset);
-        }
-      } else {
-        setRotation(0);
+      // Update points for trail
+      points.current.push({ x: e.clientX, y: e.clientY });
+      if (points.current.length > MAX_POINTS) {
+        points.current.shift();
       }
       
-      lastMousePos.current = { x: e.clientX, y: e.clientY };
       mouseX.set(e.clientX);
       mouseY.set(e.clientY);
     };
@@ -97,36 +115,94 @@ const WebCustomizer = () => {
     };
   }, [mouseX, mouseY, activeSkin]);
 
+  // Canvas Drawing for Black Hole Trail
+  useEffect(() => {
+    if (activeSkin !== 'blackhole') return;
+
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    let animationFrameId;
+
+    const resizeCanvas = () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    };
+
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    const drawTrail = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      
+      if (points.current.length < 2) {
+        animationFrameId = requestAnimationFrame(drawTrail);
+        return;
+      }
+
+      ctx.beginPath();
+      ctx.lineCap = 'round';
+      ctx.lineJoin = 'round';
+
+      // Draw the streak
+      for (let i = 0; i < points.current.length - 1; i++) {
+        const p1 = points.current[i];
+        const p2 = points.current[i + 1];
+        
+        // Tapering width and fading opacity
+        const size = (i / points.current.length) * 12;
+        const opacity = (i / points.current.length) * 0.4;
+        
+        ctx.beginPath();
+        ctx.moveTo(p1.x, p1.y);
+        ctx.lineTo(p2.x, p2.y);
+        ctx.lineWidth = size;
+        ctx.strokeStyle = `rgba(${activeColor.rgb.split(' ').join(',')}, ${opacity})`;
+        ctx.stroke();
+      }
+
+      // Add a glow effect at the head
+      const head = points.current[points.current.length - 1];
+      const gradient = ctx.createRadialGradient(head.x, head.y, 0, head.x, head.y, 20);
+      gradient.addColorStop(0, `rgba(${activeColor.rgb.split(' ').join(',')}, 0.5)`);
+      gradient.addColorStop(1, 'transparent');
+      ctx.fillStyle = gradient;
+      ctx.beginPath();
+      ctx.arc(head.x, head.y, 20, 0, Math.PI * 2);
+      ctx.fill();
+
+      animationFrameId = requestAnimationFrame(drawTrail);
+    };
+
+    drawTrail();
+
+    return () => {
+      window.removeEventListener('resize', resizeCanvas);
+      cancelAnimationFrame(animationFrameId);
+    };
+  }, [activeSkin, activeColor]);
+
   const CursorFollower = () => {
     if (activeSkin === 'none') return null;
     const skin = SKINS.find(s => s.id === activeSkin);
     const emoji = skin ? skin.emoji : '🛸';
-    const isTrailing = activeSkin === 'fire' || activeSkin === 'sparkles';
+
+    // Special effects logic
+    const velocityMagnitude = useTransform([velX, velY], ([vx, vy]) => {
+      return Math.sqrt(vx * vx + vy * vy);
+    });
+
+    const starScale = useTransform(velocityMagnitude, [0, 1000], [1, 2]);
+    const starGlow = useTransform(velocityMagnitude, [0, 1000], [15, 40]);
 
     return (
       <>
-        {/* Trailing Effects */}
-        {isTrailing && (
-          <>
-            <motion.div
-              className="fixed top-0 left-0 pointer-events-none z-[9998] text-xl opacity-60 select-none"
-              style={{ x: trail1X, y: trail1Y, translateX: '-50%', translateY: '-50%', scale: 0.8 }}
-            >
-              {emoji}
-            </motion.div>
-            <motion.div
-              className="fixed top-0 left-0 pointer-events-none z-[9997] text-lg opacity-40 select-none"
-              style={{ x: trail2X, y: trail2Y, translateX: '-50%', translateY: '-50%', scale: 0.6 }}
-            >
-              {emoji}
-            </motion.div>
-            <motion.div
-              className="fixed top-0 left-0 pointer-events-none z-[9996] text-sm opacity-20 select-none"
-              style={{ x: trail3X, y: trail3Y, translateX: '-50%', translateY: '-50%', scale: 0.4 }}
-            >
-              {emoji}
-            </motion.div>
-          </>
+        {/* Canvas for Trail */}
+        {activeSkin === 'blackhole' && (
+          <canvas
+            ref={canvasRef}
+            className="fixed inset-0 pointer-events-none z-[9998]"
+          />
         )}
 
         {/* Main Follower */}
@@ -135,18 +211,46 @@ const WebCustomizer = () => {
           style={{
             x: smoothX,
             y: smoothY,
+            rotate: (activeSkin === 'blackhole' || activeSkin === 'saturn') ? undefined : directionalRotation,
             translateX: '-50%',
             translateY: '-50%',
-            rotate: rotation
           }}
           animate={{
             scale: isHovering ? 1.8 : 1,
+            rotate: (activeSkin === 'blackhole' || activeSkin === 'saturn') ? 360 : undefined
           }}
-          transition={{ rotate: { type: 'spring', damping: 15, stiffness: 100 } }}
+          transition={{ 
+            rotate: (activeSkin === 'blackhole' || activeSkin === 'saturn')
+              ? { repeat: Infinity, duration: activeSkin === 'saturn' ? 10 : 2, ease: "linear" } 
+              : { type: 'spring', damping: 10, stiffness: 400, mass: 0.2 },
+            scale: { type: 'spring', stiffness: 300, damping: 20 }
+          }}
         >
-          <span className="block drop-shadow-[0_0_15px_var(--primary-glow)]">
-            {emoji}
-          </span>
+          <motion.span 
+            className="block"
+            style={{
+              dropShadow: activeSkin === 'star' 
+                ? useTransform(starGlow, (v) => `0 0 ${v}px var(--primary-glow)`)
+                : '0 0 15px var(--primary-glow)',
+              scale: activeSkin === 'star' ? starScale : 1
+            }}
+            animate={
+              activeSkin === 'astronot' 
+                ? { y: [0, -8, 0] } 
+                : activeSkin === 'star'
+                ? { opacity: [0.7, 1, 0.7], scale: [0.95, 1.05, 0.95] }
+                : {}
+            }
+            transition={
+              activeSkin === 'astronot'
+                ? { repeat: Infinity, duration: 3, ease: "easeInOut" }
+                : activeSkin === 'star'
+                ? { repeat: Infinity, duration: 1.5, ease: "easeInOut" }
+                : {}
+            }
+          >
+            {activeSkin === 'moon' ? moonEmoji : emoji}
+          </motion.span>
         </motion.div>
       </>
     );
