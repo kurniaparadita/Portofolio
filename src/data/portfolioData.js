@@ -28,7 +28,6 @@ export const skillsData = [
   { name: "PostgreSQL", category: "Database & Data", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" },
   { name: "MySQL", category: "Database & Data", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" },
   { name: "SSIS / SSRS", category: "Database & Data", icon: "https://img.icons8.com/color/48/microsoft-sql-server.png" }, // Placeholder for SSIS/SSRS
-  { name: "JDBC", category: "Database & Data", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" },
 
   // 2. Backend Development
   { name: "Java", category: "Backend", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" },
@@ -46,13 +45,20 @@ export const skillsData = [
   { name: "Git", category: "Tools", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" },
   { name: "GitHub", category: "Tools", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" },
   { name: "Insomnia", category: "Tools", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/insomnia/insomnia-original.svg" },
-  // { name: "Postman", category: "Tools", icon: "https://www.vectorlogo.zone/logos/getpostman/getpostman-icon.svg" },
+  { name: "Postman", category: "Tools", icon: "https://www.vectorlogo.zone/logos/getpostman/getpostman-icon.svg" },
   { name: "Figma", category: "Tools", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg" },
 
   // 5. Web & Supporting Tech
   { name: "Laravel", category: "Supporting Tech", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/laravel/laravel-original.svg" },
   { name: "PHP", category: "Supporting Tech", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/php/php-original.svg" },
-  { name: "phpMyAdmin", category: "Supporting Tech", icon: "https://www.vectorlogo.zone/logos/phpmyadmin/phpmyadmin-icon.svg" },
+
+  // 6. AI / Computer Vision
+  { name: "Python", category: "AI / Computer Vision", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" },
+  { name: "YOLOv8", category: "AI / Computer Vision", icon: "https://www.vectorlogo.zone/logos/ultralytics/ultralytics-icon.svg" },
+  { name: "OpenCV", category: "AI / Computer Vision", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/opencv/opencv-original.svg" },
+  { name: "Deep Learning", category: "AI / Computer Vision", icon: "https://img.icons8.com/color/48/artificial-intelligence.png" },
+  { name: "Machine Learning", category: "AI / Computer Vision", icon: "https://img.icons8.com/color/48/brain--v1.png" },
+  { name: "Streamlit", category: "AI / Computer Vision", icon: "https://www.vectorlogo.zone/logos/streamlitio/streamlitio-icon.svg" },
 ];
 
 export const projectsData = [
