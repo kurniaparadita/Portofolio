@@ -25,7 +25,17 @@ const COLORS = [
 const WebCustomizer = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [activeSkin, setActiveSkin] = useState('none');
-  const [activeColor, setActiveColor] = useState(COLORS[0]);
+  
+  // Load initial color from localStorage or use default
+  const [activeColor, setActiveColor] = useState(() => {
+    const savedColor = localStorage.getItem('portfolio-accent-color');
+    if (savedColor) {
+      const found = COLORS.find(c => c.name === savedColor);
+      return found || COLORS[0];
+    }
+    return COLORS[0];
+  });
+
   const [isHovering, setIsHovering] = useState(false);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const [moonEmoji, setMoonEmoji] = useState('🌕');
@@ -42,11 +52,12 @@ const WebCustomizer = () => {
   const points = useRef([]); // To store mouse history for trail
   const MAX_POINTS = 20;
 
-  // Update CSS Variables when color changes
+  // Update CSS Variables when color changes and save to localStorage
   useEffect(() => {
     document.documentElement.style.setProperty('--primary-color', activeColor.hex);
     document.documentElement.style.setProperty('--primary-rgb', activeColor.rgb);
     document.documentElement.style.setProperty('--primary-glow', activeColor.glow);
+    localStorage.setItem('portfolio-accent-color', activeColor.name);
   }, [activeColor]);
 
   // Motion tracking for cursor
@@ -115,7 +126,6 @@ const WebCustomizer = () => {
     };
   }, [mouseX, mouseY, activeSkin]);
 
-  // Canvas Drawing for Black Hole Trail
   useEffect(() => {
     if (activeSkin !== 'blackhole') return;
 

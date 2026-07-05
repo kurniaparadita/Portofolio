@@ -101,13 +101,13 @@ const Hero = () => {
           </motion.p>
           
           <motion.div variants={itemVariants} className="flex flex-col sm:flex-row items-center justify-center gap-6">
-            <Link to="projects" smooth={true} offset={-70} duration={800}>
+            <Link to="projects" smooth={true} offset={-70} duration={500}>
               <button className="btn-primary group flex items-center gap-3">
                 {heroData.cta}
                 <ArrowRight size={20} className="group-hover:translate-x-1.5 transition-transform duration-300" />
               </button>
             </Link>
-            <Link to="contact" smooth={true} offset={-70} duration={800}>
+            <Link to="contact" smooth={true} offset={-70} duration={500}>
               <button className="btn-outline">
                 Hubungi Saya
               </button>
@@ -122,7 +122,7 @@ const Hero = () => {
         transition={{ delay: 2, duration: 1 }}
         className="absolute bottom-12 left-1/2 -translate-x-1/2 z-10"
       >
-        <Link to="about" smooth={true} offset={-70} duration={800} className="cursor-pointer group">
+        <Link to="about" smooth={true} offset={-70} duration={500} className="cursor-pointer group">
           <motion.div
             animate={{ y: [0, 15, 0] }}
             transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}

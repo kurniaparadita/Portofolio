@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <defs>
+    <linearGradient id="y-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ffffff;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:var(--primary-color, #10b981);stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#06b6d4;stop-opacity:1" />
+    </linearGradient>
+    
+    <filter id="ultra-glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="3" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+
+  <!-- Background Hexagon (Faded) -->
+  <path d="M50 5 L89 27.5 L89 72.5 L50 95 L11 72.5 L11 27.5 Z" 
+        fill="none" 
+        stroke="var(--primary-color, #10b981)" 
+        stroke-width="1" 
+        stroke-dasharray="4 2" 
+        opacity="0.2" />
+
+  <!-- Tech Hexagon Frame -->
+  <path d="M50 10 L85 30 L85 70 L50 90 L15 70 L15 30 Z" 
+        fill="none" 
+        stroke="url(#y-grad)" 
+        stroke-width="2" 
+        stroke-linecap="round"
+        stroke-dasharray="20 10 40 5"
+        filter="url(#ultra-glow)" />
+
+  <!-- The Tech 'Y' Monogram -->
+  <g filter="url(#ultra-glow)">
+    <!-- Main Y Shape (Double Line Effect) -->
+    <path d="M35 30 L50 50 L65 30" fill="none" stroke="url(#y-grad)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M50 50 L50 75" fill="none" stroke="url(#y-grad)" stroke-width="6" stroke-linecap="round" />
+    
+    <!-- Inner Line for detail -->
+    <path d="M38 32 L50 48 L62 32" fill="none" stroke="white" stroke-width="1" stroke-opacity="0.5" stroke-linecap="round" />
+    <path d="M50 50 L50 70" fill="none" stroke="white" stroke-width="1" stroke-opacity="0.5" stroke-linecap="round" />
+  </g>
+
+  <!-- Connection Nodes (Bulatan Data) -->
+  <circle cx="35" cy="30" r="3" fill="white" />
+  <circle cx="65" cy="30" r="3" fill="white" />
+  <circle cx="50" cy="75" r="3" fill="white" />
+  
+  <!-- Central Pulse Core -->
+  <circle cx="50" cy="50" r="4" fill="white" filter="url(#ultra-glow)">
+    <animate attributeName="r" values="3;5;3" dur="2s" repeatCount="indefinite" />
+    <animate attributeName="opacity" values="0.7;1;0.7" dur="2s" repeatCount="indefinite" />
+  </circle>
+</svg>

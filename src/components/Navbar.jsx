@@ -38,7 +38,7 @@ const Navbar = () => {
               spy={true}
               smooth={true}
               offset={-70}
-              duration={800}
+              duration={500}
               activeClass="text-primary font-semibold relative after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-full after:h-0.5 after:bg-primary after:rounded-full"
               className="text-slate-400 hover:text-white cursor-pointer transition-colors font-medium text-sm tracking-widest uppercase relative group"
             >
